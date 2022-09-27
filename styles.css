@@ -1,0 +1,38 @@
+
+.text-pink{
+    color: rgb(255, 0, 128);
+}
+
+.text-darkRed{
+    color: rgb(244, 9, 9);    
+}
+
+.borde-Navbar{
+    border-bottom: solid 7px rgb(244, 9, 9); 
+    border-top: solid 7px rgb(244, 9, 9); 
+}
+
+.bkground-header{
+    background-image: url(img/header.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    height: 80.3vh;
+}
+
+.fs-10{
+    font-size: 5rem;
+}
+
+.bkgroud-texto-header{
+    background-color: rgba(0, 0, 0, 0.621);
+    border: solid 7px rgb(255, 177, 177); 
+
+    border-radius: 15px;
+}
+
+.centrar{
+    margin: 0 auto;
+
+}
