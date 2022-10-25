@@ -6,31 +6,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/48286f2072.js" crossorigin="anonymous"></script>
-
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+
     <link rel="stylesheet" href="styles.css">
 
 
-    <title>Document</title>
+    <title>Pet-Love</title>
 </head>
 
 <body>
 
     <header>
-        <nav class="borde-Navbar pt-3 pb-3" style="background-color: #f9cee7;">
+        <nav class="borde-Navbar pt-3 pb-3" style="background-color: #ffc2e6;">
             <div class="container">
 
                 <a href="index.html" class="text-decoration-none">
-                    <h1 class="fs-1 text-center text-pink ">Conexión<i class="fa-solid fa-heart text-darkRed"></i><b
-                            class="">Instantánea</b></h1>
+                    <h1 class="fs-1 text-center text-pink ">Pet<i class="fa-solid fa-heart text-darkRed me-4"></i><b
+                            class="">Love</b></h1>
                 </a>
                 <div class="d-flex justify-content-evenly mt-3">
-                    <a href="#" class="text-darkRed fs-4 text-decoration-none"><i
-                            class="fa-solid fa-hand-holding-heart"></i> Quiero adoptar</a>
-                    <a href="#" class="text-darkRed fs-4 text-decoration-none"><i class="fa-solid fa-gift"></i> Quiero
+                    <a href="#formularioAdopcion" class="text-darkRed fs-4 text-decoration-none"><i
+                            class="fa-solid fa-hand-holding-heart me-2"></i> Quiero adoptar</a>
+                    <a href="#" class="text-darkRed fs-4 text-decoration-none"><i class="fa-solid fa-gift  me-2"></i>
+                        Quiero
                         dar en adopción</a>
-                    <a href="#" class="text-darkRed fs-4 text-decoration-none"><i class="fa-solid fa-shield-heart"></i>
+                    <a href="#" class="text-darkRed fs-4 text-decoration-none"><i
+                            class="fa-solid fa-shield-heart  me-2"></i>
                         Hogar provisorio</a>
                 </div>
 
@@ -42,12 +46,59 @@
 
             <div class="bkgroud-texto-header centrar w-75 pt-3 pb-3">
                 <h1 class="text-center fs-10 text-light">Este sitio está en construcción</h1>
-                <h3 class="text-center text-light">Te invitamos a que vayas registrando tus datos a Conexión
-                    Instantánea, una app de "citas" que va a permitirte conectarte con la máscota que estás buscando, y
+                <h3 class="text-center text-light">Te invitamos a que vayas registrando tus datos a Pet Love, una app de "citas" que va a permitirte conectarte con la máscota que estás buscando, y
                     a ella con tu hogar y amor.</h3>
             </div>
 
         </div>
+
+        <!-- Formulario adopción -->
+
+        <section id="formularioAdopcion" class="borde-Navbar" style="background-color: #ffc2e6;">
+            <div class="container pt-5 pb-5">
+                <h2 class="text-darkRed text-center ">Formulario de adopción</h2>
+                <h4 class="text-darkRed text-center ">A continuación te vamos a solicitar algunos datos para poder
+                    mostrarte perfiles
+                    de mascotas</h4>
+
+                <form  action="" class="mt-5 w-50 centrar">
+                    <input id="nombreUsuario" type="text" class="form-control border border-danger mt-2 mb-2" placeholder="Introducí tu nombre">
+                    <input id="edadUsuario" type="number" class="form-control border border-danger mt-2 mb-2" placeholder="Introducí tu edad">
+                    <select id="tipoMascota" aria-placeholder="" class="form-control border border-danger mt-2 mb-2" name="" id="">
+                        <option selected value="seleccione">- Seleccione tipo de mascota -</option>
+                        <option value="gato">Gato</option>
+                        <option value="perro">Perro</option>
+                        <option value="todos">Todos</option>
+                    </select>
+
+                    <select id="generoMascota" aria-placeholder="" class="form-control border border-danger mt-2 mb-2" name="" id="">
+                        <option selected value="seleccione">- Seleccione género -</option>
+                        <option value="macho">Macho</option>
+                        <option value="hembra">Hembra</option>
+                        <option value="todos">Indistinto</option>
+                    </select>
+
+                    <div class="d-flex justify-content-center">
+                        <button id="botonFormulario" type="submit" class="btn btn-danger ps-5 pe-5 btn-lg mb-2 mt-2">Filtrar</button>
+
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Tarjetas  -->
+        <section id="tarjetas" class="borde-Navbar" style="background-color: #ffc2e6;">
+            <div class="container pt-5 pb-5">
+                <h2 class="text-darkRed text-center ">Estas son las opciones que coinciden con tus filtros</h2>
+                <div class="swiper mySwiper">
+                    <div id="listaTarjetas" class="swiper-wrapper mt-5">
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </header>
 
 
@@ -55,6 +106,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
         crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+
     <script src="script.js"></script>
 </body>
 
