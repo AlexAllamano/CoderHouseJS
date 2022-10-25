@@ -1,12 +1,8 @@
 
 
-var swiper = new Swiper(".mySwiper", {
-    effect: "cards",
-    grabCursor: true,
-});
 
-
-arregloMascotas = [
+// Inicializo un arreglo de ejemplos cargado, y el arreglo filtrado que se carga con el localStorage
+let arregloMascotas = [
     mascota1 = new Mascota('Lenny', 2, 'Gato', 'Macho', 'Chiquito y mimoso, blanquito', 'https://www.instagram.com/', 'https://www.purina-latam.com/sites/g/files/auxxlc391/files/styles/social_share_large/public/Purina%C2%AE%20La%20llegada%20del%20gatito%20a%20casa.jpg?itok=_3VnSPSl'),
     mascota2 = new Mascota('Leon', 2, 'Perro', 'Macho', 'Peludo, juguetón e intenso', 'https://www.instagram.com/', 'https://thumbs.dreamstime.com/b/perro-de-perrito-en-el-parque-50880187.jpg'),
     mascota3 = new Mascota('Ramón', 5, 'Gato', 'Macho', 'Viejito, pero el más compañero', 'https://www.instagram.com/', 'https://www.clarin.com/img/2022/05/03/hEUHNtPrq_360x240__1.jpg'),
@@ -22,6 +18,11 @@ arregloMascotas = [
 
 localStorage.setItem('arregloMascotas', JSON.stringify(arregloMascotas));
 
+let arregloFiltrado = JSON.parse(localStorage.getItem('arregloFiltrado')) || [];
+
+
+//inicializo elemntos del DOM
+
 let inputNombreUsuario = document.getElementById('nombreUsuario');
 let inputEdadUsuario = document.getElementById('edadUsuario');
 let selectTipoMascota = document.getElementById('tipoMascota');
@@ -29,8 +30,54 @@ let selectGeneroMascota = document.getElementById('generoMascota');
 let botonFormulario = document.getElementById('botonFormulario');
 let seccionTarjetas = document.getElementById('listaTarjetas');
 
+arregloFiltrado.forEach(item => {
+
+    let tarjetaHtml = `<div class="swiper-slide">
+                    <div class="d-flex flex-column">
+                        <img src="${item.imagen}"
+                            alt="">
+                        <div class="container">
+                            <h3>${item.nombre}, ${item.edad} meses</h3>
+                            <div class="d-flex align-items-center">
+                                <i class="fa-solid fa-paw"></i>
+                                <h4 class="ms-2 mb-0">${item.tipo}</h4>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="fa-solid fa-venus-mars"></i>
+                                <h4 class="ms-2 mb-0">${item.genero}</h4>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <h4 class="ms-2 mb-0">Río Grande 76</h4>
+                            </div>
+                            <p class="mt-2 parrafoTarjeta">${item.anotaciones}
+                            </p>
+
+                            <div class="d-flex justify-content-center">
+                                <a href="${item.contacto}" target="_blank"
+                                    class="btn btn-light">Contactar
+                                    dueño</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>`
+
+    seccionTarjetas.innerHTML += tarjetaHtml;
+
+});
+
+var swiper = new Swiper(".mySwiper", {
+    effect: "cards",
+    grabCursor: true,
+});
+
 let validar = () => {
+
+    //si no están completos todos los campos, lanza una alerta
+
     if (inputNombreUsuario.value != "" && inputEdadUsuario.value != "" && selectTipoMascota.value != 'seleccione' && selectGeneroMascota.value != 'seleccione') {
+      
+        //si es menor de 16, lanza un error
         if (parseInt(inputEdadUsuario.value) < 16) {
             Swal.fire({
                 position: 'top-end',
@@ -41,6 +88,9 @@ let validar = () => {
                 width: '30%'
             })
         } else {
+
+            //notifica que se cargaron los datos y está filtrando
+
             Swal.fire({
                 position: 'top-end',
                 icon: 'success',
@@ -50,8 +100,42 @@ let validar = () => {
                 width: '30%'
             })
 
-            arregloMascotas.forEach(item => {
-                console.log(item);
+            //filtro por tipo
+
+            switch(selectTipoMascota.value){
+                case 'gato': {
+                    arregloFiltrado = arregloMascotas.filter(item => item.tipo == 'Gato');
+                }break;
+                case 'perro':{
+                    arregloFiltrado = arregloMascotas.filter(item => item.tipo == 'Perro');
+                }break;
+                case 'todos':{
+                    arregloFiltrado = arregloMascotas.filter(item => item.tipo == 'Perro' || item.tipo == 'Gato');
+                }break;
+            }
+
+            //filtro por genero
+
+            switch(selectGeneroMascota.value){
+                case 'macho':{
+                    arregloFiltrado = arregloFiltrado.filter(item => item.genero == 'Macho');
+                }break;
+                case 'hembra':{
+                    arregloFiltrado = arregloFiltrado.filter(item => item.genero == 'Hembra');
+                }break;
+                case 'todos':{
+                    arregloFiltrado = arregloFiltrado.filter(item => item.genero == 'Macho' || item.genero == 'Hembra');
+                }break;
+            }
+
+            //seteo el nuevo arreglo para el localStorage
+            localStorage.setItem('arregloFiltrado', JSON.stringify(arregloFiltrado));
+
+            //limpio el HTML
+            seccionTarjetas.innerHTML = '';
+
+            //recorro el arreglo y agrego el nuevo HTML
+            arregloFiltrado.forEach(item => {
 
                 let tarjetaHtml = `<div class="swiper-slide">
                                 <div class="d-flex flex-column">
@@ -85,6 +169,11 @@ let validar = () => {
 
                 seccionTarjetas.innerHTML += tarjetaHtml;
 
+                var swiper = new Swiper(".mySwiper", {
+                    effect: "cards",
+                    grabCursor: true,
+                });
+
             });
         }
 
@@ -99,6 +188,8 @@ let validar = () => {
         })
     }
 }
+
+//eventos
 
 botonFormulario.addEventListener('click', validar);
 
