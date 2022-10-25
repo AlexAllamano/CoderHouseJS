@@ -28,9 +28,11 @@
                             class="">Love</b></h1>
                 </a>
                 <div class="d-flex justify-content-evenly mt-3">
-                    <a href="#formularioAdopcion" class="text-darkRed fs-4 text-decoration-none"><i
+                    <a id="botonQuieroAdoptar" href="#formularioAdopcion"
+                        class="text-darkRed fs-4 text-decoration-none"><i
                             class="fa-solid fa-hand-holding-heart me-2"></i> Quiero adoptar</a>
-                    <a href="#" class="text-darkRed fs-4 text-decoration-none"><i class="fa-solid fa-gift  me-2"></i>
+                    <a id="botonQuieroDarEnAdopcion" href="#formularioDarEnAdopcion"
+                        class="text-darkRed fs-4 text-decoration-none"><i class="fa-solid fa-gift  me-2"></i>
                         Quiero
                         dar en adopción</a>
                     <a href="#" class="text-darkRed fs-4 text-decoration-none"><i
@@ -42,66 +44,130 @@
 
         </nav>
 
-        <div class="bkground-header d-flex flex-column justify-content-center">
+        <div id="header" class="bkground-header d-flex flex-column justify-content-center">
 
             <div class="bkgroud-texto-header centrar w-75 pt-3 pb-3">
-                <h1 class="text-center fs-10 text-light">Este sitio está en construcción</h1>
-                <h3 class="text-center text-light">Te invitamos a que vayas registrando tus datos a Pet Love, una app de "citas" que va a permitirte conectarte con la máscota que estás buscando, y
-                    a ella con tu hogar y amor.</h3>
+                <h2 class="text-center fs-10 text-light">Este sitio aún está en construcción</h2>
+                <h3 class="text-center text-light">Accedé a las secciones disponibles cliqueando "Quiero adoptar" o
+                    "Quiero dar en adopción" en la barra de navegación</h3>
             </div>
 
         </div>
+    </header>
 
-        <!-- Formulario adopción -->
+    <main>
 
-        <section id="formularioAdopcion" class="borde-Navbar" style="background-color: #ffc2e6;">
-            <div class="container pt-5 pb-5">
-                <h2 class="text-darkRed text-center ">Formulario de adopción</h2>
-                <h4 class="text-darkRed text-center ">A continuación te vamos a solicitar algunos datos para poder
-                    mostrarte perfiles
-                    de mascotas</h4>
+        <!-- Formulario dar en adopción -->
 
-                <form  action="" class="mt-5 w-50 centrar">
-                    <input id="nombreUsuario" type="text" class="form-control border border-danger mt-2 mb-2" placeholder="Introducí tu nombre">
-                    <input id="edadUsuario" type="number" class="form-control border border-danger mt-2 mb-2" placeholder="Introducí tu edad">
-                    <select id="tipoMascota" aria-placeholder="" class="form-control border border-danger mt-2 mb-2" name="" id="">
+        <section id="formularioDarEnAdopcion" class="borde-Navbar d-none h-100vh" style="background-color: #ffc2e6;">
+            <div class="container pt-3 ">
+                <h2 class="text-darkRed text-center ">Formulario para dar en adopción</h2>
+                <h4 class="text-darkRed text-center ">Completa los siguientes datos para dar de alta tu mascota</h4>
+
+                <form action="" class="mt-5 w-50 centrar">
+                    <input id="nombreMascota" type="text" class="form-control border border-danger mt-2 mb-2"
+                        placeholder="Introducí el nombre">
+                    <input id="edadMascota" type="number" class="form-control border border-danger mt-2 mb-2"
+                        placeholder="Introducí la edad (meses)">
+
+                    <select id="tipoMascotaAlta" aria-placeholder="" class="form-control border border-danger mt-2 mb-2"
+                        name="" id="">
                         <option selected value="seleccione">- Seleccione tipo de mascota -</option>
                         <option value="gato">Gato</option>
                         <option value="perro">Perro</option>
-                        <option value="todos">Todos</option>
                     </select>
 
-                    <select id="generoMascota" aria-placeholder="" class="form-control border border-danger mt-2 mb-2" name="" id="">
+                    <select id="generoMascotaAlta" aria-placeholder=""
+                        class="form-control border border-danger mt-2 mb-2" name="" id="">
                         <option selected value="seleccione">- Seleccione género -</option>
                         <option value="macho">Macho</option>
                         <option value="hembra">Hembra</option>
-                        <option value="todos">Indistinto</option>
                     </select>
 
+                    <textarea name="" class="form-control border border-danger mt-2 mb-2" id="descripcionMascota"
+                        cols="30" rows="6" placeholder="Agregá una breve descripción"></textarea>
+                    <input id="direccionMascota" type="number" class="form-control border border-danger mt-2 mb-2"
+                        placeholder="Introducí tu dirección">
+                    <input id="contactoMascota" type="number" class="form-control border border-danger mt-2 mb-2"
+                        placeholder="Agregá un enlace de contacto (Ej: https://www.instagram.com/alexallamano/)">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <input id="imagenMascota" type="number" class="form-control border border-danger mt-2 mb-2 w-50"
+                            placeholder="Introducí url de imagen">
+                        <a target="_blank" class="text-darkRed text-decoration-none btn btn-outline-danger btn-sm fz-7"
+                            href="https://www.google.com/search?q=imagenes+gatitos&rlz=1C1ONGR_esAR994AR994&sxsrf=ALiCzsaxR_U_JGf7B7vnlTljtHD7I7f6GQ:1666711399524&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjhmKXn1_v6AhXbp5UCHcDBBv8Q_AUoAXoECAQQAw&biw=1536&bih=746&dpr=1.25">Ver
+                            gatos</a>
+                        <a target="_blank" class="text-darkRed text-decoration-none btn btn-outline-danger fz-7 btn-sm"
+                            href="https://www.google.com/search?q=imagenes+perros&tbm=isch&ved=2ahUKEwjOutLo1_v6AhX1jZUCHcSgBooQ2-cCegQIABAA&oq=imagenes+perros&gs_lcp=CgNpbWcQAzIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQ6BAgjECc6CAgAEIAEELEDUPIFWMsRYLQSaABwAHgAgAFfiAGDBJIBATeYAQCgAQGqAQtnd3Mtd2l6LWltZ8ABAQ&sclient=img&ei=av9XY87dFfWb1sQPxMGa0Ag&bih=746&biw=1536&rlz=1C1ONGR_esAR994AR994">Ver
+                            perros</a>
+                    </div>
+
                     <div class="d-flex justify-content-center">
-                        <button id="botonFormulario" type="submit" class="btn btn-danger ps-5 pe-5 btn-lg mb-2 mt-2">Filtrar</button>
+                        <button id="botonCrearMascota" type="submit"
+                            class="btn btn-danger ps-5 pe-5 btn-lg mb-2 mt-2">Cargar mascota</button>
 
                     </div>
                 </form>
             </div>
         </section>
 
-        <!-- Tarjetas  -->
-        <section id="tarjetas" class="borde-Navbar" style="background-color: #ffc2e6;">
-            <div class="container pt-5 pb-5">
-                <h2 class="text-darkRed text-center ">Estas son las opciones que coinciden con tus filtros</h2>
-                <div class="swiper mySwiper">
-                    <div id="listaTarjetas" class="swiper-wrapper mt-5">
-                        
-                        
+        <div class="d-flex">
+            <!-- Formulario adopción -->
+
+            <section id="formularioAdopcion" class="borde-Navbar d-none h-100vh w-50" style="background-color: #ffc2e6;">
+                <div class="container pt-5 pb-5">
+                    <h2 class="text-darkRed text-center ">Formulario de adopción</h2>
+                    <h4 class="text-darkRed text-center ">A continuación te vamos a solicitar algunos datos para poder
+                        mostrarte perfiles
+                        de mascotas</h4>
+
+                    <form action="" class="mt-5 w-50 centrar">
+                        <input id="nombreUsuario" type="text" class="form-control border border-danger mt-2 mb-2"
+                            placeholder="Introducí tu nombre">
+                        <input id="edadUsuario" type="number" class="form-control border border-danger mt-2 mb-2"
+                            placeholder="Introducí tu edad">
+                        <select id="tipoMascota" aria-placeholder="" class="form-control border border-danger mt-2 mb-2"
+                            name="" id="">
+                            <option selected value="seleccione">- Seleccione tipo de mascota -</option>
+                            <option value="gato">Gato</option>
+                            <option value="perro">Perro</option>
+                            <option value="todos">Todos</option>
+                        </select>
+
+                        <select id="generoMascota" aria-placeholder=""
+                            class="form-control border border-danger mt-2 mb-2" name="" id="">
+                            <option selected value="seleccione">- Seleccione género -</option>
+                            <option value="macho">Macho</option>
+                            <option value="hembra">Hembra</option>
+                            <option value="todos">Indistinto</option>
+                        </select>
+
+                        <div class="d-flex justify-content-center">
+                            <button id="botonFormulario" type="submit"
+                                class="btn btn-danger ps-5 pe-5 btn-lg mb-2 mt-2">Filtrar</button>
+
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Tarjetas  -->
+            <section id="tarjetas" class="borde-Navbar d-none h-100vh w-50" style="background-color: #ffc2e6;">
+                <div class="container pt-5 pb-5">
+                    <h2 id="tituloTarjetas" class="text-darkRed text-center ">Resultados de tu última búsqueda</h2>
+                    <div class="swiper mySwiper">
+                        <div id="listaTarjetas" class="swiper-wrapper mt-5">
+
+
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-    </header>
+            </section>
+        </div>
 
 
+
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"

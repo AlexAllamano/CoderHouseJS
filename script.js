@@ -1,18 +1,29 @@
 
 
-//inicializo elemntos del DOM
+//inicializo elementos del navbar
+let botonQuieroAdoptar = document.getElementById('botonQuieroAdoptar');
+let botonQuieroDarEnAdopcion = document.getElementById('botonQuieroDarEnAdopcion');
+let header = document.getElementById('header');
 
+//inicializo elemntos dar en Adopción
+let seccionDarEnAdopcion = document.getElementById('formularioDarEnAdopcion');
+let botonCrearMascota = document.getElementById('botonCrearMascota');
+
+//inicializo elemntos Adopción
+let seccionAdoptar = document.getElementById('formularioAdopcion');
 let inputNombreUsuario = document.getElementById('nombreUsuario');
 let inputEdadUsuario = document.getElementById('edadUsuario');
 let selectTipoMascota = document.getElementById('tipoMascota');
 let selectGeneroMascota = document.getElementById('generoMascota');
 let botonFormulario = document.getElementById('botonFormulario');
+let seccionTarjetasPadre = document.getElementById('tarjetas');
 let seccionTarjetas = document.getElementById('listaTarjetas');
+let tituloTarjetas = document.getElementById('tituloTarjetas');
 
 // Inicializo un arreglo de ejemplos cargado, y el arreglo filtrado que se carga con el localStorage
 let arregloMascotas = [
     mascota1 = new Mascota('Lenny', 2, 'Gato', 'Macho', 'Chiquito y mimoso, blanquito', 'Río Grande 76', 'https://www.instagram.com/', 'https://www.purina-latam.com/sites/g/files/auxxlc391/files/styles/social_share_large/public/Purina%C2%AE%20La%20llegada%20del%20gatito%20a%20casa.jpg?itok=_3VnSPSl'),
-    mascota2 = new Mascota('Leon', 2, 'Perro', 'Macho', 'Peludo, juguetón e intenso', 'Gral Paz 120', 'https://www.instagram.com/', 'https://thumbs.dreamstime.com/b/perro-de-perrito-en-el-parque-50880187.jpg'),
+    mascota2 = new Mascota('León', 2, 'Perro', 'Macho', 'Peludo, juguetón e intenso', 'Gral Paz 120', 'https://www.instagram.com/', 'https://thumbs.dreamstime.com/b/perro-de-perrito-en-el-parque-50880187.jpg'),
     mascota3 = new Mascota('Ramón', 5, 'Gato', 'Macho', 'Viejito, pero el más compañero', 'Punta del Sauce 2318', 'https://www.instagram.com/', 'https://www.clarin.com/img/2022/05/03/hEUHNtPrq_360x240__1.jpg'),
     mascota4 = new Mascota('Flopy', 3, 'Perro', 'Hembra', 'La más fiel de todas', 'Buenos Aires 495', 'https://www.instagram.com/', 'https://okdiario.com/img/2020/06/17/5-aspectos-basicos-sobre-el-embarazo-de-tu-perrita-655x368.jpg'),
     mascota5 = new Mascota('Lucy', 2, 'Perro', 'Hembra', 'Chiquitita, vive en depto!', 'Obispo Oro 43', 'https://www.instagram.com/', 'https://nombres-para.wiki/wp-content/uploads/2018/06/Nombres-para-perritas.jpg'),
@@ -26,6 +37,7 @@ let arregloMascotas = [
 
 let arregloFiltrado = JSON.parse(localStorage.getItem('arregloFiltrado')) || [];
 
+let hizoBusqueda = false;
 dibujarTarjetas(arregloFiltrado);
 
 
@@ -38,9 +50,35 @@ dibujarTarjetas(arregloFiltrado);
 //eventos
 //eventos
 
+
+// Validar campos de "adoptar" y mostrar tarjetas
 botonFormulario.addEventListener('click', function (event) {
     event.preventDefault();
+    hizoBusqueda = true;
     validar();
+});
+
+// Validar campos de "dar en adopcion" y crear nueva mascota
+
+// Mostrar seccion adoptar y tarjetas
+botonQuieroAdoptar.addEventListener('click', function(event){
+    event.preventDefault();
+
+    seccionAdoptar.classList.remove('d-none');
+    seccionTarjetasPadre.classList.remove('d-none');
+    seccionDarEnAdopcion.classList.add('d-none');
+    header.classList.add('d-none');
+});
+
+// Mostrar seccion dar en adopcion
+botonQuieroDarEnAdopcion.addEventListener('click', function(event){
+    event.preventDefault();
+
+    seccionDarEnAdopcion.classList.remove('d-none');
+    seccionAdoptar.classList.add('d-none');
+    seccionTarjetasPadre.classList.add('d-none');
+    header.classList.add('d-none');
+
 });
 
 
@@ -70,8 +108,10 @@ function Mascota(nombre, edad, tipo, genero, anotaciones, direccion, contacto, i
 //Funciones 
 
 
+
 function validar() {
 
+    
 
     //si no están completos todos los campos, lanza una alerta
 
@@ -145,16 +185,22 @@ function validar() {
     }
 }
 
-
-
-
 function dibujarTarjetas(arreglo) {
+
+    if(arreglo.length < 1){
+        tituloTarjetas.innerHTML = 'Completá los campos para visualizar resultados';
+    }else if(hizoBusqueda){
+        tituloTarjetas.innerHTML = 'Estos son los perfiles que coinciden con tus filtros';
+    }else{
+        tituloTarjetas.innerHTML = 'Resultados de tu última búsqueda';
+    }
+
     //limpio el HTML
-    seccionTarjetas.innerHTML = '';
+    seccionTarjetas.innerHTML = "";
     
     //seteo el nuevo arreglo para el localStorage
     localStorage.removeItem('arregloFiltrado');
-    localStorage.setItem('arregloFiltrado', JSON.stringify(arregloFiltrado));
+    localStorage.setItem('arregloFiltrado', JSON.stringify(arreglo));
 
 
 
