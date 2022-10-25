@@ -9,6 +9,15 @@ let header = document.getElementById('header');
 let seccionDarEnAdopcion = document.getElementById('formularioDarEnAdopcion');
 let botonCrearMascota = document.getElementById('botonCrearMascota');
 
+let nombreMascota = document.getElementById('nombreMascota');
+let edadMascota = document.getElementById('edadMascota');
+let tipoMascotaAlta = document.getElementById('tipoMascotaAlta');
+let generoMascotaAlta = document.getElementById('generoMascotaAlta');
+let descripcionMascota = document.getElementById('descripcionMascota');
+let direccionMascota = document.getElementById('direccionMascota');
+let contactoMascota = document.getElementById('contactoMascota');
+let imagenMascota = document.getElementById('imagenMascota');
+
 //inicializo elemntos Adopción
 let seccionAdoptar = document.getElementById('formularioAdopcion');
 let inputNombreUsuario = document.getElementById('nombreUsuario');
@@ -35,7 +44,13 @@ let arregloMascotas = [
     mascota11 = new Mascota('Manolo', 2, 'Gato', 'Macho', 'Mimoso y charlatán', 'Bower 54', 'https://www.instagram.com/', 'http://mascotafiel.com/wp-content/uploads/2016/10/que-raza-son-los-gatos-naranja.jpg'),
 ];
 
+arregloMascotas = JSON.parse(localStorage.getItem('arregloMascotas')) || arregloMascotas;
+
+console.log(arregloMascotas);
+
 let arregloFiltrado = JSON.parse(localStorage.getItem('arregloFiltrado')) || [];
+
+
 
 let hizoBusqueda = false;
 dibujarTarjetas(arregloFiltrado);
@@ -60,8 +75,13 @@ botonFormulario.addEventListener('click', function (event) {
 
 // Validar campos de "dar en adopcion" y crear nueva mascota
 
+botonCrearMascota.addEventListener('click', function (event) {
+    event.preventDefault();
+    validarMascota();
+})
+
 // Mostrar seccion adoptar y tarjetas
-botonQuieroAdoptar.addEventListener('click', function(event){
+botonQuieroAdoptar.addEventListener('click', function (event) {
     event.preventDefault();
 
     seccionAdoptar.classList.remove('d-none');
@@ -71,7 +91,7 @@ botonQuieroAdoptar.addEventListener('click', function(event){
 });
 
 // Mostrar seccion dar en adopcion
-botonQuieroDarEnAdopcion.addEventListener('click', function(event){
+botonQuieroDarEnAdopcion.addEventListener('click', function (event) {
     event.preventDefault();
 
     seccionDarEnAdopcion.classList.remove('d-none');
@@ -108,10 +128,7 @@ function Mascota(nombre, edad, tipo, genero, anotaciones, direccion, contacto, i
 //Funciones 
 
 
-
 function validar() {
-
-    
 
     //si no están completos todos los campos, lanza una alerta
 
@@ -144,13 +161,13 @@ function validar() {
 
             switch (selectTipoMascota.value) {
                 case 'gato': {
-                    arregloFiltrado = arregloMascotas.filter(item => item.tipo == 'Gato');
+                    arregloFiltrado = arregloMascotas.filter(item => item.tipo.toLowerCase() == 'gato');
                 } break;
                 case 'perro': {
-                    arregloFiltrado = arregloMascotas.filter(item => item.tipo == 'Perro');
+                    arregloFiltrado = arregloMascotas.filter(item => item.tipo.toLowerCase() == 'perro');
                 } break;
                 case 'todos': {
-                    arregloFiltrado = arregloMascotas.filter(item => item.tipo == 'Perro' || item.tipo == 'Gato');
+                    arregloFiltrado = arregloMascotas.filter(item => item.tipo.toLowerCase() == 'perro' || item.tipo.toLowerCase() == 'gato');
                 } break;
             }
 
@@ -158,13 +175,13 @@ function validar() {
 
             switch (selectGeneroMascota.value) {
                 case 'macho': {
-                    arregloFiltrado = arregloFiltrado.filter(item => item.genero == 'Macho');
+                    arregloFiltrado = arregloFiltrado.filter(item => item.genero.toLowerCase() == 'macho');
                 } break;
                 case 'hembra': {
-                    arregloFiltrado = arregloFiltrado.filter(item => item.genero == 'Hembra');
+                    arregloFiltrado = arregloFiltrado.filter(item => item.genero.toLowerCase() == 'hembra');
                 } break;
                 case 'todos': {
-                    arregloFiltrado = arregloFiltrado.filter(item => item.genero == 'Macho' || item.genero == 'Hembra');
+                    arregloFiltrado = arregloFiltrado.filter(item => item.genero.toLowerCase() == 'macho' || item.genero.toLowerCase() == 'hembra');
                 } break;
             }
 
@@ -187,17 +204,17 @@ function validar() {
 
 function dibujarTarjetas(arreglo) {
 
-    if(arreglo.length < 1){
+    if (arreglo.length < 1) {
         tituloTarjetas.innerHTML = 'Completá los campos para visualizar resultados';
-    }else if(hizoBusqueda){
+    } else if (hizoBusqueda) {
         tituloTarjetas.innerHTML = 'Estos son los perfiles que coinciden con tus filtros';
-    }else{
+    } else {
         tituloTarjetas.innerHTML = 'Resultados de tu última búsqueda';
     }
 
     //limpio el HTML
     seccionTarjetas.innerHTML = "";
-    
+
     //seteo el nuevo arreglo para el localStorage
     localStorage.removeItem('arregloFiltrado');
     localStorage.setItem('arregloFiltrado', JSON.stringify(arreglo));
@@ -207,12 +224,12 @@ function dibujarTarjetas(arreglo) {
     //recorro el arreglo y agrego el nuevo HTML
     arreglo.forEach(item => {
 
-        const {imagen, nombre, edad, tipo, genero, anotaciones, contacto, direccion} = item;
+        const { imagen, nombre, edad, tipo, genero, anotaciones, contacto, direccion } = item;
 
         let tarjetaHtml = `<div class="swiper-slide">
                         <div class="d-flex flex-column">
                             <img src="${imagen}"
-                                alt="">
+                                alt="foto de mascota">
                             <div class="container">
                                 <h3>${nombre}, ${edad} meses</h3>
                                 <div class="d-flex align-items-center">
@@ -239,14 +256,43 @@ function dibujarTarjetas(arreglo) {
                         </div>
                     </div>`
 
-        seccionTarjetas.innerHTML += tarjetaHtml;        
+        seccionTarjetas.innerHTML += tarjetaHtml;
     });
 
-    
+
     var swiper = new Swiper(".mySwiper", {
         effect: "cards",
         grabCursor: true,
     });
 
 
+}
+
+function validarMascota() {
+    if (nombreMascota.value == '' || edadMascota.value == '' || descripcionMascota.value == '' || direccionMascota.value == '' ||
+        contactoMascota.value == '' || imagenMascota.value == '' || tipoMascotaAlta.value == 'seleccione' || generoMascotaAlta.value == 'seleccione'){
+            Swal.fire({
+                position: 'top-end',
+                icon: 'warning',
+                title: 'Completa todos los datos',
+                timer: 2000,
+                showConfirmButton: false,
+                width: '30%'
+            })
+        }
+        else{
+            nuevaMascota = new Mascota(nombreMascota.value, parseInt(edadMascota.value), tipoMascotaAlta.value, generoMascotaAlta.value,
+                                       descripcionMascota.value, direccionMascota.value, contactoMascota.value, imagenMascota.value);
+            arregloMascotas.push(nuevaMascota);
+            localStorage.setItem('arregloMascotas', JSON.stringify(arregloMascotas));
+
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Mascota cargada correctamente',
+                timer: 2000,
+                showConfirmButton: false,
+                width: '30%'
+            });
+        }
 }
