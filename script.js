@@ -226,73 +226,78 @@ function dibujarTarjetas(arreglo) {
 
         const { imagen, nombre, edad, tipo, genero, anotaciones, contacto, direccion } = item;
 
-        let tarjetaHtml = `<div class="swiper-slide">
-                        <div class="d-flex flex-column">
-                            <img src="${imagen}"
-                                alt="foto de mascota">
-                            <div class="container">
-                                <h3>${nombre}, ${edad} meses</h3>
-                                <div class="d-flex align-items-center">
-                                    <i class="fa-solid fa-paw"></i>
-                                    <h4 class="ms-2 mb-0">${tipo}</h4>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    <i class="fa-solid fa-venus-mars"></i>
-                                    <h4 class="ms-2 mb-0">${genero}</h4>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    <i class="fa-solid fa-location-dot"></i>
-                                    <h4 class="ms-2 mb-0">${direccion}</h4>
-                                </div>
-                                <p class="mt-2 parrafoTarjeta">${anotaciones}
-                                </p>
+        let nodo = document.createElement('div');
+        nodo.classList.add("swiper-slide");
+        const tarjetaHtml = `
+        <div class="d-flex flex-column">
+            <img src="${imagen}"
+                alt="foto de mascota">
+            <div class="container">
+                <h3>${nombre}, ${edad} meses</h3>
+                <div class="d-flex align-items-center">
+                    <i class="fa-solid fa-paw"></i>
+                    <h4 class="ms-2 mb-0">${tipo}</h4>
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="fa-solid fa-venus-mars"></i>
+                    <h4 class="ms-2 mb-0">${genero}</h4>
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <h4 class="ms-2 mb-0">${direccion}</h4>
+                </div>
+                <p class="mt-2 parrafoTarjeta">${anotaciones}
+                </p>
 
-                                <div class="d-flex justify-content-center">
-                                    <a href="${contacto}" target="_blank"
-                                        class="btn btn-light">Contactar
-                                        dueño</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>`
+                <div class="d-flex justify-content-center">
+                    <a href="${contacto}" target="_blank"
+                        class="btn btn-light">Contactar
+                        dueño</a>
+                </div>
+            </div>
+        </div>`;
+        nodo.innerHTML = tarjetaHtml;
+        seccionTarjetas.appendChild(nodo);
 
-        seccionTarjetas.innerHTML += tarjetaHtml;
+        var swiper = new Swiper(".mySwiper", {
+            effect: "cards",
+            grabCursor: true,
+            observer: true,
+            loop: true
+        });
+    
     });
 
 
-    var swiper = new Swiper(".mySwiper", {
-        effect: "cards",
-        grabCursor: true,
-    });
-
+    
 
 }
 
 function validarMascota() {
     if (nombreMascota.value == '' || edadMascota.value == '' || descripcionMascota.value == '' || direccionMascota.value == '' ||
-        contactoMascota.value == '' || imagenMascota.value == '' || tipoMascotaAlta.value == 'seleccione' || generoMascotaAlta.value == 'seleccione'){
-            Swal.fire({
-                position: 'top-end',
-                icon: 'warning',
-                title: 'Completa todos los datos',
-                timer: 2000,
-                showConfirmButton: false,
-                width: '30%'
-            })
-        }
-        else{
-            nuevaMascota = new Mascota(nombreMascota.value, parseInt(edadMascota.value), tipoMascotaAlta.value, generoMascotaAlta.value,
-                                       descripcionMascota.value, direccionMascota.value, contactoMascota.value, imagenMascota.value);
-            arregloMascotas.push(nuevaMascota);
-            localStorage.setItem('arregloMascotas', JSON.stringify(arregloMascotas));
+        contactoMascota.value == '' || imagenMascota.value == '' || tipoMascotaAlta.value == 'seleccione' || generoMascotaAlta.value == 'seleccione') {
+        Swal.fire({
+            position: 'top-end',
+            icon: 'warning',
+            title: 'Completa todos los datos',
+            timer: 2000,
+            showConfirmButton: false,
+            width: '30%'
+        })
+    }
+    else {
+        nuevaMascota = new Mascota(nombreMascota.value, parseInt(edadMascota.value), tipoMascotaAlta.value, generoMascotaAlta.value,
+            descripcionMascota.value, direccionMascota.value, contactoMascota.value, imagenMascota.value);
+        arregloMascotas.push(nuevaMascota);
+        localStorage.setItem('arregloMascotas', JSON.stringify(arregloMascotas));
 
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Mascota cargada correctamente',
-                timer: 2000,
-                showConfirmButton: false,
-                width: '30%'
-            });
-        }
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Mascota cargada correctamente',
+            timer: 2000,
+            showConfirmButton: false,
+            width: '30%'
+        });
+    }
 }
