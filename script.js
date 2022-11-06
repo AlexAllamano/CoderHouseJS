@@ -31,18 +31,20 @@ let tituloTarjetas = document.getElementById('tituloTarjetas');
 
 // Inicializo un arreglo de ejemplos cargado, y el arreglo filtrado que se carga con el localStorage
 let arregloMascotas = [
-    mascota1 = new Mascota('Lenny', 2, 'Gato', 'Macho', 'Chiquito y mimoso, blanquito', 'Río Grande 76', 'https://www.instagram.com/', obtenerImagenUrl('gato')),
-    mascota2 = new Mascota('León', 2, 'Perro', 'Macho', 'Peludo, juguetón e intenso', 'Gral Paz 120', 'https://www.instagram.com/', obtenerImagenUrl('perro')),
-    mascota3 = new Mascota('Ramón', 5, 'Gato', 'Macho', 'Viejito, pero el más compañero', 'Punta del Sauce 2318', 'https://www.instagram.com/', obtenerImagenUrl('gato')),
-    mascota4 = new Mascota('Flopy', 3, 'Perro', 'Hembra', 'La más fiel de todas', 'Buenos Aires 495', 'https://www.instagram.com/', obtenerImagenUrl('perro')),
-    mascota5 = new Mascota('Lucy', 2, 'Perro', 'Hembra', 'Chiquitita, vive en depto!', 'Obispo Oro 43', 'https://www.instagram.com/', obtenerImagenUrl('perro')),
-    mascota6 = new Mascota('Lima', 2, 'Gato', 'Hembra', 'Micha castrada peluda, le gusta bañarse', 'Pasaje Fournier 22', 'https://www.instagram.com/', obtenerImagenUrl('gato')),
-    mascota7 = new Mascota('Ichi', 2, 'Gato', 'Macho', 'Es tímido pero muy mimoso', 'Salta 542', 'https://www.instagram.com/', obtenerImagenUrl('gato')),
-    mascota8 = new Mascota('Chicho', 2, 'Perro', 'Macho', 'No hay perro más obediente', 'Cachiyaco 533', 'https://www.instagram.com/', obtenerImagenUrl('perro')),
-    mascota9 = new Mascota('Tosty', 2, 'Gato', 'Hembra', 'Muy hiperactiva', 'Velez Sasrfield 5000', 'https://www.instagram.com/', obtenerImagenUrl('gato')),
-    mascota10 = new Mascota('Yuki', 2, 'Gato', 'Hembra', 'La más fotogénica', 'Gobernación 105', 'https://www.instagram.com/', obtenerImagenUrl('gato')),
-    mascota11 = new Mascota('Manolo', 2, 'Gato', 'Macho', 'Mimoso y charlatán', 'Bower 54', 'https://www.instagram.com/', obtenerImagenUrl('gato')),
+    mascota1 = new Mascota('Lenny', 2, 'Gato', 'Macho', 'Chiquito y mimoso, blanquito', 'Río Grande 76', 'https://www.instagram.com/', ''),
+    mascota2 = new Mascota('León', 2, 'Perro', 'Macho', 'Peludo, juguetón e intenso', 'Gral Paz 120', 'https://www.instagram.com/', ''),
+    mascota3 = new Mascota('Ramón', 5, 'Gato', 'Macho', 'Viejito, pero el más compañero', 'Punta del Sauce 2318', 'https://www.instagram.com/', ''),
+    mascota4 = new Mascota('Flopy', 3, 'Perro', 'Hembra', 'La más fiel de todas', 'Buenos Aires 495', 'https://www.instagram.com/', ''),
+    mascota5 = new Mascota('Lucy', 2, 'Perro', 'Hembra', 'Chiquitita, vive en depto!', 'Obispo Oro 43', 'https://www.instagram.com/', ''),
+    mascota6 = new Mascota('Lima', 2, 'Gato', 'Hembra', 'Micha castrada peluda, le gusta bañarse', 'Pasaje Fournier 22', 'https://www.instagram.com/', ''),
+    mascota7 = new Mascota('Ichi', 2, 'Gato', 'Macho', 'Es tímido pero muy mimoso', 'Salta 542', 'https://www.instagram.com/', ''),
+    mascota8 = new Mascota('Chicho', 2, 'Perro', 'Macho', 'No hay perro más obediente', 'Cachiyaco 533', 'https://www.instagram.com/', ''),
+    mascota9 = new Mascota('Tosty', 2, 'Gato', 'Hembra', 'Muy hiperactiva', 'Velez Sasrfield 5000', 'https://www.instagram.com/', ''),
+    mascota10 = new Mascota('Yuki', 2, 'Gato', 'Hembra', 'La más fotogénica', 'Gobernación 105', 'https://www.instagram.com/', ''),
+    mascota11 = new Mascota('Manolo', 2, 'Gato', 'Macho', 'Mimoso y charlatán', 'Bower 54', 'https://www.instagram.com/', ''),
 ];
+
+obtenerImagenURL();
 
 arregloMascotas = JSON.parse(localStorage.getItem('arregloMascotas')) || arregloMascotas;
 let arregloFiltrado = JSON.parse(localStorage.getItem('arregloFiltrado')) || [];
@@ -123,25 +125,22 @@ function Mascota(nombre, edad, tipo, genero, anotaciones, direccion, contacto, i
 //Funciones 
 //Funciones 
 
-function obtenerImagenUrl(tipo){
-    let datos = obtenerImagen(tipo).then(data => console.log(data));
-    console.log(datos);
-    return datos;
- }
+function obtenerImagenURL(){
+    arregloMascotas.forEach(masc => {
+        let imagen; 
 
-async function obtenerImagen(tipo) {
-    let imagen; 
-
-    if (tipo.toLowerCase() == 'gato') {
-        imagen = await fetch('https://aws.random.cat/meow').then(resp => resp.json()).then(data => data.file);
-        
-        return imagen;
-    } else {
-        imagen = await fetch('https://random.dog/woof.json').then(resp => resp.json()).then(data => data.url);
-        
-        return imagen;
-    }
+        if (masc.tipo.toLowerCase() == 'gato') {
+            imagen =  fetch('https://aws.random.cat/meow').then(resp => resp.json()).then(data => masc.imagen = data.file);
+            
+            return imagen;
+        } else {
+            imagen =  fetch('https://random.dog/woof.json').then(resp => resp.json()).then(data =>  masc.imagen = data.url);
+            
+            return imagen;
+        }
+    });
 }
+
 
 
 
