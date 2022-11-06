@@ -1,33 +1,36 @@
 
 
 //inicializo elementos del navbar
-let botonQuieroAdoptar = document.getElementById('botonQuieroAdoptar');
-let botonQuieroDarEnAdopcion = document.getElementById('botonQuieroDarEnAdopcion');
-let header = document.getElementById('header');
+const botonQuieroAdoptar = document.getElementById('botonQuieroAdoptar');
+const botonQuieroDarEnAdopcion = document.getElementById('botonQuieroDarEnAdopcion');
+const header = document.getElementById('header');
 
 //inicializo elemntos dar en Adopción
-let seccionDarEnAdopcion = document.getElementById('formularioDarEnAdopcion');
-let botonCrearMascota = document.getElementById('botonCrearMascota');
+const seccionDarEnAdopcion = document.getElementById('formularioDarEnAdopcion');
+const botonCrearMascota = document.getElementById('botonCrearMascota');
+const formAdop = document.getElementById('formularioAdop');
 
-let nombreMascota = document.getElementById('nombreMascota');
-let edadMascota = document.getElementById('edadMascota');
-let tipoMascotaAlta = document.getElementById('tipoMascotaAlta');
-let generoMascotaAlta = document.getElementById('generoMascotaAlta');
-let descripcionMascota = document.getElementById('descripcionMascota');
-let direccionMascota = document.getElementById('direccionMascota');
-let contactoMascota = document.getElementById('contactoMascota');
-let imagenMascota = document.getElementById('imagenMascota');
+const nombreMascota = document.getElementById('nombreMascota');
+const edadMascota = document.getElementById('edadMascota');
+const tipoMascotaAlta = document.getElementById('tipoMascotaAlta');
+const generoMascotaAlta = document.getElementById('generoMascotaAlta');
+const descripcionMascota = document.getElementById('descripcionMascota');
+const direccionMascota = document.getElementById('direccionMascota');
+const contactoMascota = document.getElementById('contactoMascota');
+const imagenMascota = document.getElementById('imagenMascota');
 
 //inicializo elemntos Adopción
-let seccionAdoptar = document.getElementById('formularioAdopcion');
-let inputNombreUsuario = document.getElementById('nombreUsuario');
-let inputEdadUsuario = document.getElementById('edadUsuario');
-let selectTipoMascota = document.getElementById('tipoMascota');
-let selectGeneroMascota = document.getElementById('generoMascota');
-let botonFormulario = document.getElementById('botonFormulario');
-let seccionTarjetasPadre = document.getElementById('tarjetas');
-let seccionTarjetas = document.getElementById('listaTarjetas');
-let tituloTarjetas = document.getElementById('tituloTarjetas');
+const formDar = document.getElementById('formularioDar');
+
+const seccionAdoptar = document.getElementById('formularioAdopcion');
+const inputNombreUsuario = document.getElementById('nombreUsuario');
+const inputEdadUsuario = document.getElementById('edadUsuario');
+const selectTipoMascota = document.getElementById('tipoMascota');
+const selectGeneroMascota = document.getElementById('generoMascota');
+const botonFormulario = document.getElementById('botonFormulario');
+const seccionTarjetasPadre = document.getElementById('tarjetas');
+const seccionTarjetas = document.getElementById('listaTarjetas');
+const tituloTarjetas = document.getElementById('tituloTarjetas');
 
 // Inicializo un arreglo de ejemplos cargado, y el arreglo filtrado que se carga con el localStorage
 let arregloMascotas = [
@@ -125,6 +128,8 @@ function Mascota(nombre, edad, tipo, genero, anotaciones, direccion, contacto, i
 //Funciones 
 //Funciones 
 
+
+//Función Fetch que obtiene imágenes de mascotas de Apis
 function obtenerImagenURL(){
     arregloMascotas.forEach(masc => {
         let imagen; 
@@ -147,6 +152,79 @@ function obtenerImagenURL(){
 
 
 
+//Función que maqueta las tarjetas según si existe una búsqueda o si es la primera vez
+function dibujarTarjetas(arreglo) {
+
+    if (arreglo.length < 1) {
+        tituloTarjetas.innerHTML = 'Completá los campos para visualizar resultados';
+    } else if (hizoBusqueda) {
+        tituloTarjetas.innerHTML = 'Estos son los perfiles que coinciden con tus filtros';
+    } else {
+        tituloTarjetas.innerHTML = 'Resultados de tu última búsqueda';
+    }
+
+    //limpio el HTML
+    seccionTarjetas.innerHTML = "";
+
+    //seteo el nuevo arreglo para el localStorage
+    localStorage.removeItem('arregloFiltrado');
+    localStorage.setItem('arregloFiltrado', JSON.stringify(arreglo));
+
+
+
+    //recorro el arreglo y agrego el nuevo HTML
+    arreglo.forEach(item => {
+
+        const { imagen, nombre, edad, tipo, genero, anotaciones, contacto, direccion } = item;
+
+        let nodo = document.createElement('div');
+        nodo.classList.add("swiper-slide");
+        const tarjetaHtml = `
+        <div class="d-flex flex-column">
+            <img src="${imagen}"
+                alt="foto de mascota">
+            <div class="container">
+                <h3>${nombre}, ${edad} meses</h3>
+                <div class="d-flex align-items-center">
+                    <i class="fa-solid fa-paw"></i>
+                    <h4 class="ms-2 mb-0">${tipo}</h4>
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="fa-solid fa-venus-mars"></i>
+                    <h4 class="ms-2 mb-0">${genero}</h4>
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <h4 class="ms-2 mb-0">${direccion}</h4>
+                </div>
+                <p class="mt-2 parrafoTarjeta">${anotaciones}
+                </p>
+
+                <div class="d-flex justify-content-center">
+                    <a href="${contacto}" target="_blank"
+                        class="btn btn-light">Contactar
+                        dueño</a>
+                </div>
+            </div>
+        </div>`;
+        nodo.innerHTML = tarjetaHtml;
+        seccionTarjetas.appendChild(nodo);
+
+        var swiper = new Swiper(".mySwiper", {
+            effect: "cards",
+            grabCursor: true,
+            observer: true,
+            loop: true
+        });
+
+    });
+
+
+
+
+}
+
+//Función que valida el form "quiero adoptar"
 function validar() {
 
     //si no están completos todos los campos, lanza una alerta
@@ -221,77 +299,7 @@ function validar() {
     }
 }
 
-function dibujarTarjetas(arreglo) {
-
-    if (arreglo.length < 1) {
-        tituloTarjetas.innerHTML = 'Completá los campos para visualizar resultados';
-    } else if (hizoBusqueda) {
-        tituloTarjetas.innerHTML = 'Estos son los perfiles que coinciden con tus filtros';
-    } else {
-        tituloTarjetas.innerHTML = 'Resultados de tu última búsqueda';
-    }
-
-    //limpio el HTML
-    seccionTarjetas.innerHTML = "";
-
-    //seteo el nuevo arreglo para el localStorage
-    localStorage.removeItem('arregloFiltrado');
-    localStorage.setItem('arregloFiltrado', JSON.stringify(arreglo));
-
-
-
-    //recorro el arreglo y agrego el nuevo HTML
-    arreglo.forEach(item => {
-
-        const { imagen, nombre, edad, tipo, genero, anotaciones, contacto, direccion } = item;
-
-        let nodo = document.createElement('div');
-        nodo.classList.add("swiper-slide");
-        const tarjetaHtml = `
-        <div class="d-flex flex-column">
-            <img src="${imagen}"
-                alt="foto de mascota">
-            <div class="container">
-                <h3>${nombre}, ${edad} meses</h3>
-                <div class="d-flex align-items-center">
-                    <i class="fa-solid fa-paw"></i>
-                    <h4 class="ms-2 mb-0">${tipo}</h4>
-                </div>
-                <div class="d-flex align-items-center">
-                    <i class="fa-solid fa-venus-mars"></i>
-                    <h4 class="ms-2 mb-0">${genero}</h4>
-                </div>
-                <div class="d-flex align-items-center">
-                    <i class="fa-solid fa-location-dot"></i>
-                    <h4 class="ms-2 mb-0">${direccion}</h4>
-                </div>
-                <p class="mt-2 parrafoTarjeta">${anotaciones}
-                </p>
-
-                <div class="d-flex justify-content-center">
-                    <a href="${contacto}" target="_blank"
-                        class="btn btn-light">Contactar
-                        dueño</a>
-                </div>
-            </div>
-        </div>`;
-        nodo.innerHTML = tarjetaHtml;
-        seccionTarjetas.appendChild(nodo);
-
-        var swiper = new Swiper(".mySwiper", {
-            effect: "cards",
-            grabCursor: true,
-            observer: true,
-            loop: true
-        });
-
-    });
-
-
-
-
-}
-
+//Función que valida el form "quiero dar en adopción"
 function validarMascota() {
     if (nombreMascota.value == '' || edadMascota.value == '' || descripcionMascota.value == '' || direccionMascota.value == '' ||
         contactoMascota.value == '' || imagenMascota.value == '' || tipoMascotaAlta.value == 'seleccione' || generoMascotaAlta.value == 'seleccione') {
@@ -309,6 +317,8 @@ function validarMascota() {
             descripcionMascota.value, direccionMascota.value, contactoMascota.value, imagenMascota.value);
         arregloMascotas.push(nuevaMascota);
         localStorage.setItem('arregloMascotas', JSON.stringify(arregloMascotas));
+
+        formDar.reset();
 
         Swal.fire({
             position: 'top-end',
